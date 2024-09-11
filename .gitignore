@@ -7,3 +7,6 @@ node_modules
 !.env.example
 
 *.dev.sh
+
+# Avoid versioning for CSV file generated from the program
+*.csv
