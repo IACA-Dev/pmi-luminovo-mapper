@@ -1,9 +1,10 @@
 import {LuminovoIPNLine} from "../entities/LuminovoIPNLine";
 import {CSVGeneratingError} from "../errors/CSVGeneratingError";
 import * as fs from 'fs';
+import {LuminovoCSVGenerator} from "./LuminovoCSVGenerator";
 
 
-export class LuminovoCSVGenerator implements LuminovoCSVGenerator {
+export class LuminovoCSVIpnGenerator implements LuminovoCSVGenerator {
     private readonly lines : LuminovoIPNLine[];
 
 

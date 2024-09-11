@@ -1,9 +1,10 @@
 import {CSVGeneratingError} from "../errors/CSVGeneratingError";
 import {LuminovoInventoryLine} from "../entities/LuminovoInventoryLine";
+import {LuminovoCSVGenerator} from "./LuminovoCSVGenerator";
 import * as fs from 'fs';
 
 
-export class LuminovoCSVGenerator implements LuminovoCSVGenerator {
+export class LuminovoCSVInventoryGenerator implements LuminovoCSVGenerator {
     private readonly lines : LuminovoInventoryLine[];
 
 
