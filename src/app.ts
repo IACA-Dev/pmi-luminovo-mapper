@@ -1,80 +1,61 @@
+import * as yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 import * as dotenv from 'dotenv';
-import {PMIRepositoryImpl} from "./repositories/PMIRepositoryImpl";
-import {LuminovoCSVIpnGenerator} from "./services/LuminovoCSVIpnGenerator";
-import {LuminovoCSVInventoryGenerator} from "./services/LuminovoCSVInventoryGenerator";
+import {Context} from "./Context";
 
 dotenv.config();
 
+const argv = yargs(hideBin(process.argv))
+    .option('d', {
+        alias: 'directory',
+        type: 'string',
+        describe: 'Output directory',
+        demandOption: false,
+        default : ''
+    })
+    .option('n', {
+        alias: 'company name',
+        type: 'string',
+        describe: 'Name of company',
+        demandOption: true
+    })
+    .help().argv;
 
 async function main() {
-    // ############################################################################################################### TEST REPO
-    // const repo = new PMIRepositoryImpl({
-    //     host: process.env.DB_SERVER!,
-    //     user: process.env.DB_USER!,
-    //     database: process.env.DB_DATABASE!,
-    //     password: process.env.DB_PASSWORD!
-    // });
-    //
-    // await repo.open();
-    //
-    // // Just for debug
-    // console.log((await repo.getAll()));
-    //
-    // await repo.close();
 
-    // ############################################################################################################### TEST CSV IPN
+    // 1. GET DATA
+    const pmiRepository = Context.providePMIRepository();
 
-    // const generator = new LuminovoCSVIpnGenerator([
-    //     {
-    //         internalRef: "INT-001",
-    //         manufacturerName: "ACME Corp.",
-    //         manufacturerRef: "ACME-1234",
-    //         description: "High precision resistor",
-    //         package: "SMD 0805"
-    //     },
-    //     {
-    //         internalRef: "INT-002",
-    //         manufacturerName: "ACME Corp.",
-    //         manufacturerRef: "ACME-1234",
-    //         description: "High precision resistor",
-    //         package: "SMD 0805"
-    //     },
-    //     {
-    //         internalRef: "INT-003",
-    //         manufacturerName: "ACME Corp.",
-    //         manufacturerRef: "ACME-1234",
-    //         description: "High precision resistor",
-    //         package: "SMD 0805"
-    //     }]);
-    //
-    // await generator.generate("manon.csv")
+    await pmiRepository.open();
+    console.log('✅ Database connected.');
 
-    // ############################################################################################################### TEST CSV INVENTORY
+    console.log('Retrieving data (take few time)..');
+    const articles = await pmiRepository.getAll();
+    console.log(`📦️ ${articles.length} articles retrieved.`);
 
-    const generator = new LuminovoCSVInventoryGenerator([
-        {
-            internalRef: "INV-001",
-            totalStock: 1000,
-            availableStock: 750
-        },
-        {
-            internalRef: "INV-001",
-            totalStock: 1000,
-            availableStock: 750
-        },
-        {
-            internalRef: "INV-001",
-            totalStock: 1000,
-            availableStock: 750
-        }
-    ]);
+    await pmiRepository.close();
+    console.log('Database closed.');
 
-    await generator.generate("manon.csv")
+    // 2. CONVERT TO LINES
+    const ipnLines = Context.provideIPNConverter().convertToLines(articles);
+    console.log('IPN Lines generated.')
+    const inventoryLines = Context.provideInventoryConverter().convertToLines(articles);
+    console.log('Inventory Lines generated.')
+
+    // 3. EXPORT CSV
+    const args = await argv;
+    let outputDirectory = args.d;
+    if(outputDirectory === '')  outputDirectory = '.'
+
+    const name = args.n;
+    const ipnCsvOutputFilePath = `${outputDirectory}/luminovo_${name}_ipns.csv`;
+    const inventoryCsvOutputFilePath = `${outputDirectory}/luminovo_${name}_inventory.csv`;
+
+    await Context.createLuminovoCSVIPNGenerator(ipnLines).generate(ipnCsvOutputFilePath);
+    await Context.createLuminovoCSVInventoryGenerator(inventoryLines).generate(inventoryCsvOutputFilePath);
+
+    console.log(`✅ Files generated !\n\n\t▶️IPN : ${ipnCsvOutputFilePath}\n\t▶️Inventory : ${inventoryCsvOutputFilePath}`);
 }
 
-main().then(() => {
-    // Don't hesitate to replace the value with your own initial
-    const successMsg = "M+J=<3"
-    console.log(successMsg);
-}).catch(console.error);
+main().then().catch(console.error);
 
