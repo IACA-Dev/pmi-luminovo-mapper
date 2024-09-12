@@ -10,7 +10,10 @@ ___
 
 ## 📄 Purpose
 
-This program allow to generate Luminovo csv files needed by their software (`luminovo_tenantname_ipns.csv`,`luminovo_tenantname_inventory.csv`).
+This program allow to generate Luminovo csv files needed by their software :
+* `luminovo_tenantname_ipns.csv`
+* `luminovo_tenantname_inventory.csv`
+
 Program will retrieve data from PMI database.
 
 ### ⚠️ Requirements
