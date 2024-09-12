@@ -2,7 +2,7 @@
 <p align="center">Powered by </p>
 <p align="center">
 <a href="https://iaca-electronique.com">
-<img style="" width="250px" src="https://www.iaca-electronique.com/img/logo.png">
+<img alt="IACA Logo" style="" width="250px" src="https://www.iaca-electronique.com/img/logo.png">
 </a>
 </p>
 
@@ -35,6 +35,14 @@ Options:
 > **Important :** You need to setup `.env` and place it in your working directory.
 > 
 > *Example available here* : [.env.example](.env.example)
+
+### From Docker Hub
+
+```bash
+docker run -v $(pwd):/mnt -it --env-file .env iacaelectronique/pmi-luminovo-mapper -n "company name" -d /mnt
+```
+
+> Need to setup environment variables (*see [.env.example](.env.example)*)
 
 ### From Docker
 
