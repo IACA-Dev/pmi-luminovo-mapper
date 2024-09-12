@@ -2,6 +2,7 @@ import {CSVGeneratingError} from "../errors/CSVGeneratingError";
 import {LuminovoInventoryLine} from "../entities/LuminovoInventoryLine";
 import {LuminovoCSVGenerator} from "./LuminovoCSVGenerator";
 import * as fs from 'fs';
+import {encapsuleValue} from "../utils/CSVUtils";
 
 
 export class LuminovoCSVInventoryGenerator implements LuminovoCSVGenerator {
@@ -25,7 +26,7 @@ export class LuminovoCSVInventoryGenerator implements LuminovoCSVGenerator {
         const csvRows: string[] = [];
 
         for (let line of this.lines) {
-            csvRows.push(`${line.internalRef},${line.availableStock},${line.totalStock}`);
+            csvRows.push(`${encapsuleValue(line.internalRef)},${line.availableStock},${line.totalStock}`);
         }
 
         const csvContent = csvRows.join('\n');

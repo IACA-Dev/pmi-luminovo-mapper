@@ -2,6 +2,7 @@ import {LuminovoIPNLine} from "../entities/LuminovoIPNLine";
 import {CSVGeneratingError} from "../errors/CSVGeneratingError";
 import * as fs from 'fs';
 import {LuminovoCSVGenerator} from "./LuminovoCSVGenerator";
+import {encapsuleValue} from "../utils/CSVUtils";
 
 
 export class LuminovoCSVIpnGenerator implements LuminovoCSVGenerator {
@@ -25,7 +26,7 @@ export class LuminovoCSVIpnGenerator implements LuminovoCSVGenerator {
         const csvRows: string[] = [];
 
         for (let line of this.lines) {
-            csvRows.push(`${line.internalRef},${line.manufacturerName},${line.manufacturerRef},${line.description},${line.package}`);
+            csvRows.push(`${encapsuleValue(line.internalRef)},${encapsuleValue(line.manufacturerName)},${encapsuleValue(line.manufacturerRef)},\"${encapsuleValue(line.description)}\",${encapsuleValue(line.package)}`);
         }
 
         const csvContent = csvRows.join('\n');
