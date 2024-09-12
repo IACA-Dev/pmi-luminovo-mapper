@@ -36,6 +36,20 @@ Options:
 > 
 > *Example available here* : [.env.example](.env.example)
 
+### From Docker
+
+```bash
+# Git import
+git clone https://github.com/IACA-Dev/pmi-luminovo-mapper.git
+cd pmi-luminovo-mapper
+
+# Build
+docker build -t pmi-luminovo-mapper .
+
+# Run
+docker run -v $(pwd):/mnt -it --env-file .env pmi-luminovo-mapper -n "company name" -d /mnt
+```
+
 ### From GIT
 
 ```bash
