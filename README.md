@@ -22,7 +22,7 @@ Program will retrieve data from PMI database.
 
 ___
 
-## ▶️ Usage
+## ▶️ RUN
 
 ```bash
 Options:   
