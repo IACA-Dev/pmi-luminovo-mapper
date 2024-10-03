@@ -5,5 +5,6 @@ export interface ArticleEntity {
     description : string,
     package : string,
     availableStock : number,
-    totalStock : number
+    totalStock : number,
+    unitPrice : number
 }

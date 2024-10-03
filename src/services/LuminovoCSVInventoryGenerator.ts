@@ -25,8 +25,10 @@ export class LuminovoCSVInventoryGenerator implements LuminovoCSVGenerator {
     private generateCSV(output: string) {
         const csvRows: string[] = [];
 
+        csvRows.push(`"IPN","Available stock","Total stock","Unit price (Amount)"`);
+
         for (let line of this.lines) {
-            csvRows.push(`${encapsuleValue(line.internalRef)},${line.availableStock},${line.totalStock}`);
+            csvRows.push(`${encapsuleValue(line.internalRef)},${line.availableStock},${line.totalStock},${line.unitPrice}`);
         }
 
         const csvContent = csvRows.join('\n');

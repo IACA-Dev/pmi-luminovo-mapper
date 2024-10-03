@@ -59,6 +59,7 @@ function generateRandomArticle(): ArticleEntity {
         description: faker.commerce.productDescription(),
         package: faker.commerce.productMaterial(),
         totalStock: 0,
-        availableStock: 0
+        availableStock: 0,
+        unitPrice : 0
     };
 }

@@ -9,7 +9,8 @@ export abstract class ArticleMapper {
             package: `${source.ARCTCODFAM}`,
             manufacturerRawData : `${source.label}`,
             availableStock: source.ARCNDISPO as number,
-            totalStock: source.ARCNSTOPHY as number
+            totalStock: source.ARCNSTOPHY as number,
+            unitPrice : source.ARCNTARIF1 as number
         }
 
     }

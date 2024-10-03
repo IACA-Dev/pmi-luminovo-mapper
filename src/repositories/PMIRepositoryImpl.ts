@@ -54,7 +54,7 @@ export class PMIRepositoryImpl implements PMIRepository {
         const pool = this.pool!;
         const request = pool.request();
         request.multiple = true;
-        const result = await request.query<any[]>(`SELECT ARKTCODART, ARKTCOMART, ARCTLIB01, ARCTLIB02, ARCTCODFAM,  dbo.get_libelle_tt_doc_optimized_secure(ARKTCODART, ARKTCOMART) as 'label', ARCNSTOPHY, ARCNDISPO FROM ARTICLE`);
+        const result = await request.query<any[]>(`SELECT ARKTCODART, ARKTCOMART, ARCTLIB01, ARCTLIB02, ARCTCODFAM,  dbo.get_libelle_tt_doc_optimized_secure(ARKTCODART, ARKTCOMART) as 'label', ARCNSTOPHY, ARCNDISPO, ARCNTARIF1 FROM ARTICLE WHERE ARKTSOC = '100'`);
 
         return result.recordset.map(ArticleMapper.map);
     }

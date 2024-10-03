@@ -10,7 +10,8 @@ export class ArticleToLuminovoInventoryConverterImpl implements ArticleToLuminov
         return {
             internalRef : article.internalRef,
             totalStock : article.totalStock,
-            availableStock : article.availableStock
+            availableStock : article.availableStock,
+            unitPrice : article.unitPrice
         };
     }
 
