@@ -28,7 +28,7 @@ export class LuminovoCSVIpnGenerator implements LuminovoCSVGenerator {
         csvRows.push(`"IPN","Manufacturer","MPN","Description","Package"`);
 
         for (let line of this.lines) {
-            csvRows.push(`${encapsuleValue(line.internalRef)},${encapsuleValue(line.manufacturerName)},${encapsuleValue(line.manufacturerRef)},\"${encapsuleValue(line.description)}\",${encapsuleValue(line.package)}`);
+            csvRows.push(`${encapsuleValue(line.internalRef)},${encapsuleValue(line.manufacturerName)},${encapsuleValue(line.manufacturerRef)},${encapsuleValue(line.description)},${encapsuleValue(line.package)}`);
         }
 
         const csvContent = csvRows.join('\n');
