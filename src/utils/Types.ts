@@ -17,3 +17,11 @@ export function orDefault<T>(value: T | undefined, defaultValue: T): T {
 export function isNull(value : any) : boolean {
     return value === null;
 }
+
+export function isNotNull(value : any) : boolean {
+    return !isNull(value);
+}
+
+export function isString(value : any) : boolean {
+    return isNotUndefined(value) && isNotNull(value) && typeof value === 'string';
+}
