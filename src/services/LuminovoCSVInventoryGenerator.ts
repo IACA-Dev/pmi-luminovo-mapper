@@ -28,11 +28,17 @@ export class LuminovoCSVInventoryGenerator implements LuminovoCSVGenerator {
         csvRows.push(`"IPN","Available stock","Total stock","Unit price (Amount)"`);
 
         for (let line of this.lines) {
-            csvRows.push(`${encapsuleValue(line.internalRef)},${encapsuleValue(line.availableStock)},${encapsuleValue(line.totalStock)},${encapsuleValue(line.unitPrice)}`);
+            const availableStock = this.zeroIfNegative(line.availableStock);
+            const totalStock = this.zeroIfNegative(line.totalStock);
+            csvRows.push(`${encapsuleValue(line.internalRef)},${encapsuleValue(availableStock)},${encapsuleValue(totalStock)},${encapsuleValue(line.unitPrice)}`);
         }
 
         const csvContent = csvRows.join('\n');
 
         fs.writeFileSync(output, csvContent);
+    }
+
+    private zeroIfNegative(value : number) : number {
+        return value > 0 ? value : 0;
     }
 }
