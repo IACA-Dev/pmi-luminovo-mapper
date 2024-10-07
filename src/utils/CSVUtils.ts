@@ -1,4 +1,4 @@
 
-export function encapsuleValue(input : string) : string {
+export function encapsuleValue(input : string  | number) : string {
     return `"${input}"`;
 }
