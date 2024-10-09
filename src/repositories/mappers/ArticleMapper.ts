@@ -15,7 +15,7 @@ export abstract class ArticleMapper {
             manufacturerRawData : `${source.label}`,
             availableStock: source.ARCNDISPO as number,
             totalStock: source.ARCNSTOPHY as number,
-            unitPrice : source.ARCNTARIF1 as number
+            unitPrice : source.ARCNPUACH2 as number
         }
 
     }
