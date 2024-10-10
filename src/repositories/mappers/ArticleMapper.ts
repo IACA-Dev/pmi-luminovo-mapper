@@ -39,7 +39,7 @@ export abstract class ArticleMapper {
         const lib2 = source.ARCTLIB02;
 
         if (isString(source.ARCTLIB01)) description += lib1.trim();
-        if (isString(source.ARCTLIB02)) description += (description.length > 0 ? ' - ' : '') + lib2.trim();
+        if (isString(source.ARCTLIB02) && source.ARCTLIB02.trim().length > 0) description += (description.length > 0 ? ' - ' : '') + lib2.trim();
         return description;
     }
 }
