@@ -68,4 +68,27 @@ describe('ArticleMapper', () => {
         const result = ArticleMapper.map(source);
         expect(result.unitPrice).toBe(expected.unitPrice);
     });
+
+    test('should remove " character from description', () => {
+        const source = {
+            ARKTCODART: "ART001",
+            ARKTCOMART: "COM001",
+            ARCTCODFAM: "FAM001 ",
+            ARCTEXPU: "M",
+            ARCNPUACH2: 1000,
+            ARCNDISPO: 50,
+            ARCNSTOPHY: 150,
+            ARCTLIB01: 'Some "description',
+            ARCTLIB02: 'with more text"',
+            label: "manufacturerLabel",
+        };
+
+        // Since getDescription is a private method, we need to use map method to access it indirectly
+        const result = ArticleMapper.map(source);
+
+        const expectedDescription = 'Some description - with more text';
+
+        expect(result.description).toBe(expectedDescription);
+    });
+
 });
