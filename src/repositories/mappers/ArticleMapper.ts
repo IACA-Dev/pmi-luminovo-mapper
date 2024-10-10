@@ -40,6 +40,9 @@ export abstract class ArticleMapper {
 
         if (isString(source.ARCTLIB01)) description += lib1.trim();
         if (isString(source.ARCTLIB02) && source.ARCTLIB02.trim().length > 0) description += (description.length > 0 ? ' - ' : '') + lib2.trim();
+
+        description = description.replace(/"/g, '');
+
         return description;
     }
 }
